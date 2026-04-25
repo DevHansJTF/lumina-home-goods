@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ShoppingCart, Heart, Menu, X } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { useState } from "react";
+import { motion, useScroll, useMotionValueEvent } from "motion/react";
 
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -12,6 +13,19 @@ export default function Navbar() {
   const { cartCount, favorites } = useStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+      setIsMobileMenuOpen(false); // Close mobile menu if open when scrolling down
+    } else {
+      setHidden(false);
+    }
+  });
 
   const navLinks = [
     { name: "Shop", href: "/products" },
@@ -21,14 +35,22 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-[#FAFAFA]/95 dark:bg-[#111111]/95 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300">
+    <motion.nav
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: "-100%" },
+      }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="fixed top-0 left-0 w-full bg-[#FAFAFA]/95 dark:bg-[#111111]/95 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800 transition-colors duration-300"
+    >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex justify-between items-center h-20">
           {/* Logo & Desktop Nav in one group like HTML */}
           <div className="flex items-center gap-12">
             <Link
               href="/"
-              className="text-2xl font-serif tracking-tight font-semibold italic text-[#141414] dark:text-[#EAEAEA]"
+              className="text-2xl font-serif tracking-tight font-semibold text-[#141414] dark:text-[#EAEAEA]"
             >
               Lumina
             </Link>
@@ -40,7 +62,7 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   className={`transition-colors text-[#141414] dark:text-[#EAEAEA] ${
-                    pathname === link.href ? "opacity-100 font-bold" : "hover:opacity-100 opacity-60"
+                    pathname === link.href ? "opacity-100 font-semibold" : "hover:opacity-100 opacity-60"
                   }`}
                 >
                   {link.name}
@@ -59,7 +81,7 @@ export default function Navbar() {
             >
               <Heart className="w-5 h-5" />
               {favorites.length > 0 && (
-                <span className="absolute top-0 right-0 bg-[#C5A059] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute top-0 right-0 bg-[#C5A059] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-semibold">
                   {favorites.length}
                 </span>
               )}
@@ -71,7 +93,7 @@ export default function Navbar() {
             >
               <ShoppingCart className="w-5 h-5" />
               {cartCount > 0 && (
-                <span className="absolute top-0 right-0 bg-[#D97757] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute top-0 right-0 bg-[#D97757] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-semibold">
                   {cartCount}
                 </span>
               )}
@@ -99,7 +121,7 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`text-xs uppercase tracking-widest font-medium ${
                   pathname === link.href
-                    ? "text-[#141414] dark:text-[#EAEAEA] font-bold"
+                    ? "text-[#141414] dark:text-[#EAEAEA] font-semibold"
                     : "text-gray-500 dark:text-gray-400 hover:text-[#141414] dark:hover:text-[#EAEAEA]"
                 }`}
               >
@@ -109,6 +131,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </nav>
+    </motion.nav>
   );
 }

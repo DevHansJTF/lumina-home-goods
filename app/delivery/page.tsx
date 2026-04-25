@@ -2,9 +2,7 @@ export default function DeliveryPage() {
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-16 md:py-24">
       <div className="text-center mb-16 border-b border-gray-200 dark:border-gray-800 pb-12">
-        <h1 className="font-serif italic text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#EAEAEA]">
-          Delivery & Shipping
-        </h1>
+        <h1 className="font-serif text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#EAEAEA]">Delivery & Shipping</h1>
       </div>
 
       <div className="prose prose-sm text-gray-500 dark:text-gray-400 mx-auto leading-relaxed">
@@ -12,14 +10,14 @@ export default function DeliveryPage() {
           We want your new pieces to arrive safely and securely. Read about our delivery processes and lead times below.
         </p>
 
-        <h2 className="font-serif italic text-2xl text-[#141414] dark:text-[#EAEAEA] mt-12 mb-4">Standard Shipping</h2>
+        <h2 className="font-serif text-2xl text-[#141414] dark:text-[#EAEAEA] mt-12 mb-4">Standard Shipping</h2>
         <p className="mb-6">
           Most smaller decor items, textiles, and lighting are shipped via standard parcel services (e.g., FedEx, UPS).
           Orders are typically processed within 2-3 business days and delivered within 5-7 business days from the
           shipping date.
         </p>
 
-        <h2 className="font-serif italic text-2xl text-[#141414] dark:text-[#EAEAEA] mt-12 mb-4">
+        <h2 className="font-serif text-2xl text-[#141414] dark:text-[#EAEAEA] mt-12 mb-4">
           White Glove Furniture Delivery
         </h2>
         <p className="mb-6">
@@ -32,18 +30,14 @@ export default function DeliveryPage() {
           delivery window.
         </p>
 
-        <h2 className="font-serif italic text-2xl text-[#141414] dark:text-[#EAEAEA] mt-12 mb-4">
-          International Shipping
-        </h2>
+        <h2 className="font-serif text-2xl text-[#141414] dark:text-[#EAEAEA] mt-12 mb-4">International Shipping</h2>
         <p className="mb-6">
           Currently, we only ship to the contiguous United States. We are working diligently to expand our shipping
           destinations in the near future.
         </p>
 
         <div className="bg-[#FAFAFA] dark:bg-[#1A1A1A] p-10 border border-gray-200 dark:border-gray-800 mt-16 text-center">
-          <h3 className="font-serif italic text-xl text-[#141414] dark:text-[#EAEAEA] mb-2">
-            Need help with an order?
-          </h3>
+          <h3 className="font-serif text-xl text-[#141414] dark:text-[#EAEAEA] mb-2">Need help with an order?</h3>
           <p className="mb-6 text-sm">Our customer support team is here for you.</p>
           <a
             href="/contact"

@@ -31,11 +31,14 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
 
   return (
     <div className="flex flex-col w-full max-w-xl">
-      <h1 className="text-3xl md:text-4xl font-serif italic text-[#1A1A1A] dark:text-[#EAEAEA] mb-4">{product.name}</h1>
+      <h1 className="text-3xl md:text-4xl font-serif text-[#1A1A1A] dark:text-[#EAEAEA] mb-4">{product.name}</h1>
       <p className="text-lg text-[#141414] dark:text-gray-300 font-medium mb-6">${product.price.toFixed(2)}</p>
 
       <p className="text-xs text-gray-400 dark:text-gray-500 mb-8 uppercase tracking-widest">
-        SKU <span className="font-mono text-[#141414] dark:text-[#EAEAEA] ml-1">{product.id.padStart(6, "0")}</span>
+        SKU{" "}
+        <span className="font-sans font-medium text-[#141414] dark:text-[#EAEAEA] ml-1">
+          {product.id.padStart(6, "0")}
+        </span>
       </p>
 
       <div className="flex items-end gap-4 mb-8">
