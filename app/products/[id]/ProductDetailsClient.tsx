@@ -31,7 +31,13 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
 
   return (
     <div className="flex flex-col w-full max-w-xl">
+<<<<<<< HEAD
       <h1 className="text-3xl md:text-4xl font-serif text-[#1A1A1A] dark:text-[#EAEAEA] mb-4">{product.name}</h1>
+=======
+      <h1 className="text-3xl md:text-4xl font-sans font-semibold text-[#1A1A1A] dark:text-[#EAEAEA] mb-4">
+        {product.name}
+      </h1>
+>>>>>>> 3499689 (fix: hover effect fix for featured products)
       <p className="text-lg text-[#141414] dark:text-gray-300 font-medium mb-6">${product.price.toFixed(2)}</p>
 
       <p className="text-xs text-gray-400 dark:text-gray-500 mb-8 uppercase tracking-widest">

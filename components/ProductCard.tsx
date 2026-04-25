@@ -83,7 +83,13 @@ export default function ProductCard({ product }: { product: Product }) {
         <Link href={`/products/${product.id}`} className="hover:underline">
           <h4 className="text-sm font-medium text-[#141414] dark:text-[#EAEAEA]">{product.name}</h4>
         </Link>
+<<<<<<< HEAD
         <p className="text-sm font-sans mt-1 text-[#141414] dark:text-gray-300">${product.price.toFixed(2)}</p>
+=======
+        <p className="text-sm font-sans font-semibold mt-1 text-[#141414] dark:text-gray-300">
+          ${product.price.toFixed(2)}
+        </p>
+>>>>>>> 3499689 (fix: hover effect fix for featured products)
       </div>
     </motion.div>
   );
