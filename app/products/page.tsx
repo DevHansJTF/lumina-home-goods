@@ -108,7 +108,7 @@ export default function ProductsPage() {
             id="sort"
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
-            className="w-full md:w-auto px-4 py-3 bg-[#FAFAFA] dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 text-xs focus:outline-none focus:border-[#141414] dark:focus:border-[#EAEAEA] transition-colors text-gray-500 dark:text-[#EAEAEA] rounded-none focus:ring-0 cursor-pointer"
+            className="w-full md:w-auto px-4 py-3 bg-[#FAFAFA] dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 text-xs focus:outline-none focus:border-[#141414] dark:focus:border-[#EAEAEA] transition-colors text-[#141414] dark:text-[#EAEAEA] rounded-none focus:ring-0 cursor-pointer"
           >
             <option value="default">Featured (Default)</option>
             <option value="price-asc">Price: Low to High</option>

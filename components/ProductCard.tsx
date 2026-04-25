@@ -16,9 +16,12 @@ export default function ProductCard({ product }: { product: Product }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="group cursor-pointer flex flex-col"
+      className="group flex flex-col"
     >
-      <div className="aspect-square bg-white dark:bg-[#1A1A1A] border border-gray-100 dark:border-gray-800 mb-4 p-6 flex items-center justify-center relative overflow-hidden transition-colors">
+      <Link
+        href={`/products/${product.id}`}
+        className="aspect-square bg-white dark:bg-[#1A1A1A] border border-gray-100 dark:border-gray-800 mb-4 flex items-center justify-center relative overflow-hidden transition-colors block"
+      >
         <Image
           src={product.image.startsWith("http") || product.image.startsWith("/") ? product.image : `/${product.image}`}
           alt={product.name}
@@ -48,17 +51,19 @@ export default function ProductCard({ product }: { product: Product }) {
             addToCart(product);
           }}
           disabled={!product.inStock}
-          className="absolute bottom-0 left-0 right-0 bg-[#141414] dark:bg-[#EAEAEA] text-white dark:text-[#111111] text-[10px] uppercase tracking-widest py-4 opacity-0 group-hover:opacity-100 transition-opacity z-10 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          className="absolute bottom-0 left-0 right-0 bg-[#141414] dark:bg-[#EAEAEA] text-white dark:text-[#111111] text-[10px] uppercase tracking-widest py-4 opacity-0 group-hover:opacity-100 transition-opacity z-10 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-center"
         >
           {product.inStock ? "+ Quick Inquiry" : "Out of Stock"}
         </button>
-      </div>
+      </Link>
 
       <div className="flex flex-col">
         <p className="text-[10px] uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-1">
           {product.category}
         </p>
-        <h4 className="text-sm font-medium text-[#141414] dark:text-[#EAEAEA]">{product.name}</h4>
+        <Link href={`/products/${product.id}`} className="hover:underline">
+          <h4 className="text-sm font-medium text-[#141414] dark:text-[#EAEAEA]">{product.name}</h4>
+        </Link>
         <p className="text-sm font-serif italic mt-1 text-[#141414] dark:text-gray-300">${product.price.toFixed(2)}</p>
       </div>
     </motion.div>
