@@ -4,6 +4,6 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: var(--font-sans, "Inter", "sans-serif");
+  --font-sans: var(--font-sans, "Manrope", "sans-serif");
   --font-serif: var(--font-serif, "Playfair Display", "serif");
 }

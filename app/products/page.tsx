@@ -57,9 +57,7 @@ export default function ProductsPage() {
   return (
     <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-16 md:py-24">
       <div className="text-center mb-16">
-        <h1 className="font-serif italic text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#EAEAEA] mb-4">
-          Our Collection
-        </h1>
+        <h1 className="font-serif text-4xl md:text-5xl text-[#1A1A1A] dark:text-[#EAEAEA] mb-4">Our Collection</h1>
         <p className="text-sm leading-relaxed text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
           Thoughtfully designed pieces for every room. Elevate your space with our curated selection.
         </p>
@@ -128,7 +126,7 @@ export default function ProductsPage() {
         </div>
       ) : (
         <div className="text-center py-24">
-          <p className="text-gray-500 dark:text-gray-400 text-lg font-serif italic mb-2">No products found</p>
+          <p className="text-gray-500 dark:text-gray-400 text-lg font-serif mb-2">No products found</p>
           <p className="text-sm text-gray-400 dark:text-gray-500">Try adjusting your search query or filters.</p>
         </div>
       )}

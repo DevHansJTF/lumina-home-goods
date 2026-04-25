@@ -56,7 +56,7 @@ export default function CheckoutPage() {
   if (cart.length === 0) {
     return (
       <div className="max-w-5xl mx-auto px-6 md:px-12 py-24 text-center">
-        <h1 className="font-serif italic text-3xl md:text-4xl text-[#141414] dark:text-[#EAEAEA] mb-6">
+        <h1 className="font-serif text-3xl md:text-4xl text-[#141414] dark:text-[#EAEAEA] mb-6">
           Your Selection is Empty
         </h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-10">
@@ -74,7 +74,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="max-w-screen-xl mx-auto px-6 md:px-12 py-16 md:py-24">
-      <h1 className="font-serif italic text-4xl md:text-5xl text-[#141414] dark:text-[#EAEAEA] mb-12 border-b border-gray-200 dark:border-gray-800 pb-6">
+      <h1 className="font-serif text-4xl md:text-5xl text-[#141414] dark:text-[#EAEAEA] mb-12 border-b border-gray-200 dark:border-gray-800 pb-6">
         Your Selection
       </h1>
 
@@ -137,7 +137,7 @@ export default function CheckoutPage() {
 
           <div className="mt-8 flex justify-between items-center text-sm md:text-base font-medium text-[#141414] dark:text-[#EAEAEA]">
             <span className="opacity-50 text-xs uppercase tracking-widest">Est. Inquiry Value</span>
-            <span className="font-serif italic text-2xl">${cartTotal.toFixed(2)}</span>
+            <span className="font-sans text-2xl">${cartTotal.toFixed(2)}</span>
           </div>
           <p className="text-[10px] text-gray-400 mt-3 text-right italic">
             Shipping and taxes calculated after inquiry review.
@@ -147,7 +147,7 @@ export default function CheckoutPage() {
         {/* Inquiry Form */}
         <div className="w-full lg:w-[420px]">
           <div className="bg-[#FAFAFA] dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 p-8 md:p-10 sticky top-28">
-            <h3 className="font-serif italic text-xl text-[#141414] dark:text-[#EAEAEA] mb-3">Request a Quote</h3>
+            <h3 className="font-serif text-xl text-[#141414] dark:text-[#EAEAEA] mb-3">Request a Quote</h3>
             <p className="text-[11px] text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
               Submit your details. Our design team will review your selection and follow up with a finalized quote and
               shipping estimate.

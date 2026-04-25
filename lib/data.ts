@@ -11,7 +11,7 @@ export interface Product {
 export const products: Product[] = [
   {
     id: "p1",
-    name: "Mid-Century Oak Platform Bed",
+    name: "Mid Century Oak Bed",
     category: "Furniture",
     price: 899,
     description:
@@ -21,7 +21,7 @@ export const products: Product[] = [
   },
   {
     id: "p2",
-    name: "Minimalist Ceramic Table Lamp",
+    name: "Minimalist Ceramic Lamp",
     category: "Lighting",
     price: 85,
     description:
@@ -31,7 +31,7 @@ export const products: Product[] = [
   },
   {
     id: "p3",
-    name: "Velvet Tufted Sofa in Emerald",
+    name: "Velvet Tufted Emerald Sofa ",
     category: "Furniture",
     price: 1200,
     description:
@@ -71,7 +71,7 @@ export const products: Product[] = [
   },
   {
     id: "p7",
-    name: "Bouclé Dining Chairs - Set of 2",
+    name: "Bouclé Dining Chairs",
     category: "Furniture",
     price: 280,
     description: "Modern dining chairs featuring highly textured bouclé fabric and sleek black metal frames.",
@@ -118,7 +118,7 @@ export const products: Product[] = [
   },
   {
     id: "p12",
-    name: "Rust Terracotta Throw Pillows - Set of 2",
+    name: "Rust Terracotta Throw Pillows",
     category: "Textiles",
     price: 45,
     description:
@@ -176,7 +176,7 @@ export const products: Product[] = [
   },
   {
     id: "p18",
-    name: "Teak Wood Outdoor Lounge Chair",
+    name: "Teak Wood Lounge Chair",
     category: "Furniture",
     price: 410,
     description: "Weather-resistant lounge chair made from grade-A teak wood. Slatted design prevents water pooling.",
@@ -185,7 +185,7 @@ export const products: Product[] = [
   },
   {
     id: "p19",
-    name: "Speckled Ceramic Floor Vase",
+    name: "Speckled Ceramic Vase",
     category: "Decor",
     price: 115,
     description:
@@ -195,7 +195,7 @@ export const products: Product[] = [
   },
   {
     id: "p20",
-    name: "Ergonomic Standing Desk - Bamboo",
+    name: "Ergonomic Standing Desk",
     category: "Furniture",
     price: 550,
     description: "Height-adjustable standing desk with a sustainable solid bamboo top and a memory keypad controller.",
