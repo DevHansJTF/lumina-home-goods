@@ -20,7 +20,7 @@ export default function ProductCard({ product }: { product: Product }) {
     >
       <div className="aspect-square bg-white dark:bg-[#1A1A1A] border border-gray-100 dark:border-gray-800 mb-4 p-6 flex items-center justify-center relative overflow-hidden transition-colors">
         <Image
-          src={product.image}
+          src={product.image.startsWith("http") || product.image.startsWith("/") ? product.image : `/${product.image}`}
           alt={product.name}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"

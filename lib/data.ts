@@ -16,7 +16,7 @@ export const products: Product[] = [
     price: 899,
     description:
       "A timeless mid-century modern platform bed crafted from solid oak. Features clean lines, tapered legs, and a sturdy slat system for optimal mattress support.",
-    image: "https://picsum.photos/seed/p1/800/800",
+    image: "/mid-centure-bed.jpg",
     inStock: true,
   },
   {
@@ -26,7 +26,7 @@ export const products: Product[] = [
     price: 85,
     description:
       "Hand-thrown ceramic table lamp with a matte white finish. The simple, organic shape brings a calming presence to any nightstand or side table.",
-    image: "https://picsum.photos/seed/p2/800/800",
+    image: "/minimalist-ceramic-table-lamp.jpg",
     inStock: true,
   },
   {
@@ -36,7 +36,7 @@ export const products: Product[] = [
     price: 1200,
     description:
       "Luxurious emerald green velvet sofa with deep button tufting and subtle gold-finished legs. A striking centerpiece for any living room.",
-    image: "https://picsum.photos/seed/p3/800/800",
+    image: "/velvet-emerald-sofa.jpg",
     inStock: true,
   },
   {
@@ -46,7 +46,7 @@ export const products: Product[] = [
     price: 150,
     description:
       "Slim and elegant floor lamp finished in brushed brass. Features an adjustable head and a weighted base for stability.",
-    image: "https://picsum.photos/seed/p4/800/800",
+    image: "/brushed-brass-lamp-floor.jpg",
     inStock: true,
   },
   {
@@ -56,7 +56,7 @@ export const products: Product[] = [
     price: 350,
     description:
       "Comfortable accent chair upholstered in breathable natural linen. The curved back and plush cushioning ensure hours of relaxation.",
-    image: "https://picsum.photos/seed/p5/800/800",
+    image: "/linen-accent-armchair.jpg",
     inStock: true,
   },
   {
@@ -66,7 +66,7 @@ export const products: Product[] = [
     price: 1050,
     description:
       "Spacious dining table constructed from sustainably sourced solid walnut. Seats up to eight people comfortably.",
-    image: "https://picsum.photos/seed/p6/800/800",
+    image: "/solid-walnut-dining-table.jpg",
     inStock: true,
   },
   {
@@ -75,7 +75,7 @@ export const products: Product[] = [
     category: "Furniture",
     price: 280,
     description: "Modern dining chairs featuring highly textured bouclé fabric and sleek black metal frames.",
-    image: "https://picsum.photos/seed/p7/800/800",
+    image: "/bouclé-dining-chairs.jpg",
     inStock: true,
   },
   {
@@ -85,7 +85,7 @@ export const products: Product[] = [
     price: 200,
     description:
       "Eco-friendly 5x8 ft area rug handwoven from natural jute fibers. Adds texture and warmth to any room layout.",
-    image: "https://picsum.photos/seed/p8/800/800",
+    image: "/handwoven-jute-area-rug.jpg",
     inStock: true,
   },
   {
@@ -94,7 +94,7 @@ export const products: Product[] = [
     category: "Furniture",
     price: 450,
     description: "Minimalist coffee table with a clear tempered glass top and a sculptural ash wood base.",
-    image: "https://picsum.photos/seed/p9/800/800",
+    image: "/tempered-glass-coffee-table.jpg",
     inStock: true,
   },
   {
@@ -104,7 +104,7 @@ export const products: Product[] = [
     price: 95,
     description:
       "Set of three floating wall shelves made from genuine oak wood. Perfect for displaying books, plants, and photos.",
-    image: "https://picsum.photos/seed/p10/800/800",
+    image: "/floating-oak-wall-shelves.jpg",
     inStock: true,
   },
   {
@@ -113,7 +113,7 @@ export const products: Product[] = [
     category: "Furniture",
     price: 120,
     description: "Compact nightstand with a single drawer and open bottom shelf, finished in a smooth matte black.",
-    image: "https://picsum.photos/seed/p11/800/800",
+    image: "/modern-minimalist-curved-top-solid-wood-nightstand-black.jpg",
     inStock: true,
   },
   {
@@ -123,7 +123,7 @@ export const products: Product[] = [
     price: 45,
     description:
       "Soft cotton canvas throw pillows in a warm rust terracotta hue. Includes plush down-alternative inserts.",
-    image: "https://picsum.photos/seed/p12/800/800",
+    image: "/rust-terracotta-throw-pillows.jpg",
     inStock: true,
   },
   {
@@ -133,7 +133,7 @@ export const products: Product[] = [
     price: 110,
     description:
       "Heavyweight linen-blend curtains with a full blackout lining. Sold as a pair, each panel measuring 50x84 inches.",
-    image: "https://picsum.photos/seed/p13/800/800",
+    image: "/linen-blackout-curtains.jpg",
     inStock: true,
   },
   {
@@ -143,7 +143,7 @@ export const products: Product[] = [
     price: 175,
     description:
       "Unique asymmetrical wall mirror framed in thin, antiqued brass. A functional art piece for entryways or bedrooms.",
-    image: "https://picsum.photos/seed/p14/800/800",
+    image: "/asymmetrical-brass-wall-mirror.jpg",
     inStock: true,
   },
   {
@@ -152,7 +152,7 @@ export const products: Product[] = [
     category: "Lighting",
     price: 320,
     description: "Contemporary chandelier featuring intersecting matte black rings with integrated warm-white LEDs.",
-    image: "https://picsum.photos/seed/p15/800/800",
+    image: "/geometric-led-chandelier.jpg",
     inStock: true,
   },
   {
@@ -161,7 +161,7 @@ export const products: Product[] = [
     category: "Textiles",
     price: 85,
     description: "Oversized, hand-knitted throw blanket made from ultra-soft, hypoallergenic acrylic yarn in cream.",
-    image: "https://picsum.photos/seed/p16/800/800",
+    image: "/chunky-knit-throw-blanket.jpg",
     inStock: true,
   },
   {
@@ -171,7 +171,7 @@ export const products: Product[] = [
     price: 55,
     description:
       "Large, handwoven rattan basket with sturdy leather handles. Ideal for storing blankets, firewood, or toys.",
-    image: "https://picsum.photos/seed/p17/800/800",
+    image: "/woven-rattan-storage-basket.jpg",
     inStock: true,
   },
   {
@@ -180,7 +180,7 @@ export const products: Product[] = [
     category: "Furniture",
     price: 410,
     description: "Weather-resistant lounge chair made from grade-A teak wood. Slatted design prevents water pooling.",
-    image: "https://picsum.photos/seed/p18/800/800",
+    image: "/teak-wood-outdoor-lounge-chair.jpg",
     inStock: true,
   },
   {
@@ -190,7 +190,7 @@ export const products: Product[] = [
     price: 115,
     description:
       "Tall floor vase featuring a textured speckled glaze. Beautiful on its own or filled with dried pampas grass.",
-    image: "https://picsum.photos/seed/p19/800/800",
+    image: "/speckled-ceramic-floor-vase.jpg",
     inStock: true,
   },
   {
@@ -199,7 +199,7 @@ export const products: Product[] = [
     category: "Furniture",
     price: 550,
     description: "Height-adjustable standing desk with a sustainable solid bamboo top and a memory keypad controller.",
-    image: "https://picsum.photos/seed/p20/800/800",
+    image: "/ergonomic-standing-desk.jpg",
     inStock: true,
   },
 ];

@@ -15,7 +15,7 @@ export default function Home() {
           <span className="text-[#D97757] uppercase text-[10px] tracking-[0.3em] font-bold mb-4">New Collection</span>
           <h2 className="text-5xl lg:text-6xl font-serif italic mb-6 leading-tight text-[#1A1A1A] dark:text-[#EAEAEA]">
             The Art of <br />
-            Living Quietly
+            Living Exquisitely
           </h2>
           <p className="text-sm leading-relaxed text-gray-500 dark:text-gray-400 mb-8 max-w-sm">
             Hand-curated modern essentials for the refined interior. From mid-century oak to brushed brass, discover
@@ -30,7 +30,7 @@ export default function Home() {
         </div>
         <div className="w-full md:w-1/2 relative min-h-[400px] bg-gray-200">
           <Image
-            src="https://picsum.photos/seed/hero/2000/1000"
+            src="/hero-section-img.jpg"
             alt="Modern living room interior"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"

@@ -85,7 +85,12 @@ export default function CheckoutPage() {
             {cart.map((item) => (
               <div key={item.id} className="flex gap-6 items-start border-b border-gray-100 dark:border-gray-800 pb-8">
                 <div className="relative w-24 h-24 bg-[#F5F5F5] dark:bg-[#1A1A1A] flex-shrink-0">
-                  <Image src={item.image} alt={item.name} fill className="object-cover" />
+                  <Image
+                    src={item.image.startsWith("http") || item.image.startsWith("/") ? item.image : `/${item.image}`}
+                    alt={item.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
 
                 <div className="flex-1">
