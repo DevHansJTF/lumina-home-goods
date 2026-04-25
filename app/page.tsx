@@ -161,11 +161,7 @@ export default function Home() {
           </Link>
         </div>
 
-<<<<<<< HEAD
-        <div className="flex overflow-hidden relative w-full group">
-=======
         <div className="flex overflow-hidden relative w-full">
->>>>>>> 3499689 (fix: hover effect fix for featured products)
           <motion.div
             animate={{ x: ["-50%", "0%"] }}
             transition={{ ease: "linear", duration: 40, repeat: Infinity }}
@@ -191,11 +187,7 @@ export default function Home() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end text-white z-10">
-<<<<<<< HEAD
-                    <h4 className="font-serif text-xl leading-tight mb-1">{product.name}</h4>
-=======
                     <h4 className="font-sans font-semibold text-xl leading-tight mb-1">{product.name}</h4>
->>>>>>> 3499689 (fix: hover effect fix for featured products)
                     <p className="text-gray-300 text-xs tracking-wider mb-3">Lumina Collection</p>
                     <p className="text-white font-medium">
                       Price: ${product.price.toFixed(2)}{" "}

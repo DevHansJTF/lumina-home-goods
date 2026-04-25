@@ -11,11 +11,7 @@ export interface Product {
 export const products: Product[] = [
   {
     id: "p1",
-<<<<<<< HEAD
     name: "Mid Century Oak Bed",
-=======
-    name: "Mid-Century Oak Bed",
->>>>>>> 3499689 (fix: hover effect fix for featured products)
     category: "Furniture",
     price: 899,
     description:
@@ -35,11 +31,7 @@ export const products: Product[] = [
   },
   {
     id: "p3",
-<<<<<<< HEAD
-    name: "Velvet Tufted Emerald Sofa ",
-=======
     name: "Velvet Tufted Emerald Sofa",
->>>>>>> 3499689 (fix: hover effect fix for featured products)
     category: "Furniture",
     price: 1200,
     description:
@@ -203,11 +195,7 @@ export const products: Product[] = [
   },
   {
     id: "p20",
-<<<<<<< HEAD
     name: "Ergonomic Standing Desk",
-=======
-    name: "Ergonomic Standing Bamboo Desk",
->>>>>>> 3499689 (fix: hover effect fix for featured products)
     category: "Furniture",
     price: 550,
     description: "Height-adjustable standing desk with a sustainable solid bamboo top and a memory keypad controller.",
