@@ -3,12 +3,37 @@
 import { useState, useMemo } from "react";
 import ProductCard from "@/components/ProductCard";
 import { products } from "@/lib/data";
-import { Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortOption, setSortOption] = useState<string>("default");
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !sortRef.current.contains(event.target as Node)) {
+        setIsSortOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const sortOptionsData = [
+    { value: "default", label: "Featured" },
+    { value: "price-asc", label: "Price: Low to High" },
+    { value: "price-desc", label: "Price: High to Low" },
+    { value: "name-asc", label: "Alphabetical: A-Z" },
+    { value: "name-desc", label: "Alphabetical: Z-A" },
+  ];
 
   const categories = ["All", ...Array.from(new Set(products.map((p) => p.category)))];
 
@@ -95,25 +120,52 @@ export default function ProductsPage() {
         </div>
 
         {/* Sort */}
-        <div className="flex items-center gap-4 w-full md:w-auto">
-          <label
-            htmlFor="sort"
-            className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-gray-400 whitespace-nowrap"
-          >
+        <div className="flex items-center gap-4 w-full md:w-auto relative z-30" ref={sortRef}>
+          <label className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-gray-400 whitespace-nowrap">
             Sort By
           </label>
-          <select
-            id="sort"
-            value={sortOption}
-            onChange={(e) => setSortOption(e.target.value)}
-            className="w-full md:w-auto px-4 py-3 bg-[#FAFAFA] dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 text-xs focus:outline-none focus:border-[#141414] dark:focus:border-[#EAEAEA] transition-colors text-[#141414] dark:text-[#EAEAEA] rounded-none focus:ring-0 cursor-pointer"
-          >
-            <option value="default">Featured (Default)</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="name-asc">Alphabetical (A-Z)</option>
-            <option value="name-desc">Alphabetical (Z-A)</option>
-          </select>
+          <div className="relative w-full md:w-56">
+            <button
+              onClick={() => setIsSortOpen(!isSortOpen)}
+              className="w-full flex items-center justify-between px-4 py-3 bg-[#FAFAFA] dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 text-xs focus:outline-none transition-colors text-[#141414] dark:text-[#EAEAEA]"
+            >
+              <span className="font-medium tracking-wide">
+                {sortOptionsData.find((opt) => opt.value === sortOption)?.label}
+              </span>
+              <motion.div animate={{ rotate: isSortOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                <ChevronDown className="w-4 h-4 text-gray-400" />
+              </motion.div>
+            </button>
+
+            <AnimatePresence>
+              {isSortOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full left-0 right-0 mt-1 bg-[#FAFAFA] dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 shadow-xl overflow-hidden"
+                >
+                  {sortOptionsData.map((option) => (
+                    <button
+                      key={option.value}
+                      onClick={() => {
+                        setSortOption(option.value);
+                        setIsSortOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-3 text-xs tracking-wide transition-colors ${
+                        sortOption === option.value
+                          ? "bg-gray-100 dark:bg-gray-800 text-[#141414] dark:text-[#EAEAEA] font-semibold"
+                          : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-[#222222] hover:text-[#141414] dark:hover:text-[#EAEAEA]"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 

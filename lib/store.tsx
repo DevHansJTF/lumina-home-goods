@@ -17,7 +17,7 @@ interface StoreContextType {
   cart: CartItem[];
   favorites: string[];
   toasts: ToastMessage[];
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, quantityToAdd?: number) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -73,16 +73,47 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     [removeToast],
   );
 
+  const spamCountRef = React.useRef(0);
+  const lastAddTimeRef = React.useRef(0);
+
   const addToCart = React.useCallback(
-    (product: Product) => {
+    (product: Product, quantityToAdd: number = 1) => {
+      const now = Date.now();
+
+      if (quantityToAdd === 1) {
+        if (now - lastAddTimeRef.current < 2000) {
+          spamCountRef.current += 1;
+        } else {
+          spamCountRef.current = 1;
+        }
+        lastAddTimeRef.current = now;
+      } else {
+        // Reset spam counting when adding multiple quantities at once
+        spamCountRef.current = 0;
+        lastAddTimeRef.current = now;
+      }
+
       setCart((prev) => {
         const existing = prev.find((item) => item.id === product.id);
         if (existing) {
-          return prev.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item));
+          return prev.map((item) =>
+            item.id === product.id ? { ...item, quantity: item.quantity + quantityToAdd } : item,
+          );
         }
-        return [...prev, { ...product, quantity: 1 }];
+        return [...prev, { ...product, quantity: quantityToAdd }];
       });
-      addToast(`Added ${product.name} to cart`, "success");
+
+      if (spamCountRef.current > 5) {
+        if (spamCountRef.current === 6) {
+          addToast("Slow down, tastemaker. Your cart is getting full.", "info");
+        }
+      } else {
+        if (quantityToAdd > 1) {
+          addToast(`Added ${quantityToAdd} ${product.name}${product.name.endsWith("s") ? "" : "s"} to cart`, "success");
+        } else {
+          addToast(`Added ${product.name} to cart`, "success");
+        }
+      }
     },
     [addToast],
   );
