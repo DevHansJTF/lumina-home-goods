@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { ShoppingCart, Heart, Menu, X } from "lucide-react";
 import { useStore } from "@/lib/store";
@@ -29,7 +30,7 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Shop", href: "/products" },
-    { name: "Favorites", href: "/favorites" },
+    { name: "About", href: "/about" },
     { name: "Delivery", href: "/delivery" },
     { name: "Contact", href: "/contact" },
   ];
@@ -48,11 +49,8 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-20">
           {/* Logo & Desktop Nav in one group like HTML */}
           <div className="flex items-center gap-12">
-            <Link
-              href="/"
-              className="text-2xl font-serif tracking-tight font-semibold text-[#141414] dark:text-[#EAEAEA]"
-            >
-              Lumina
+            <Link href="/" className="flex items-center gap-3">
+              <Image src="/lumina-logo-3.png" alt="Lumina Logo" width={48} height={48} className="object-contain" />
             </Link>
 
             {/* Desktop Nav */}

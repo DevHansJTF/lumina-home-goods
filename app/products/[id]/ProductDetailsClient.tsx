@@ -15,12 +15,7 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
   const isFavorite = favorites.includes(product.id);
 
   const handleAddToCart = () => {
-    // Current store API doesn't have a quantity-based addToCart.
-    // It's fine to just call it multiple times or we could just add one like quick add.
-    // Let's add it a loop or just send one for now.
-    for (let i = 0; i < quantity; i++) {
-      addToCart(product);
-    }
+    addToCart(product, quantity);
   };
 
   const copyLink = () => {
@@ -31,18 +26,18 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
 
   return (
     <div className="flex flex-col w-full max-w-xl">
-      <h1 className="text-3xl md:text-4xl font-serif text-[#1A1A1A] dark:text-[#EAEAEA] mb-4">{product.name}</h1>
-      =======
       <h1 className="text-3xl md:text-4xl font-sans font-semibold text-[#1A1A1A] dark:text-[#EAEAEA] mb-4">
         {product.name}
       </h1>
       <p className="text-lg text-[#141414] dark:text-gray-300 font-medium mb-6">${product.price.toFixed(2)}</p>
+
       <p className="text-xs text-gray-400 dark:text-gray-500 mb-8 uppercase tracking-widest">
         SKU{" "}
         <span className="font-sans font-medium text-[#141414] dark:text-[#EAEAEA] ml-1">
           {product.id.padStart(6, "0")}
         </span>
       </p>
+
       <div className="flex items-end gap-4 mb-8">
         <div className="flex flex-col">
           <label className="text-[10px] uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">
@@ -81,6 +76,7 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
           <Heart className={`w-5 h-5 ${isFavorite ? "fill-[#D97757] text-[#D97757]" : ""}`} />
         </button>
       </div>
+
       <div className="flex flex-col gap-3 py-6 border-t border-b border-gray-100 dark:border-gray-800 mb-8">
         <span className="text-xs text-[#141414] dark:text-[#EAEAEA] font-medium">Share this:</span>
         <div className="flex gap-3">
@@ -140,6 +136,7 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
           </button>
         </div>
       </div>
+
       {/* Accordions */}
       <div className="flex flex-col w-full border-t border-gray-100 dark:border-gray-800 border-b">
         {/* Details */}
