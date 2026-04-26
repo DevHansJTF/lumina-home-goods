@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Package, Globe, ShieldCheck, MapPin } from "lucide-react";
-import Lenis from "lenis";
 
 const deliveryPhases = [
   {
@@ -129,23 +128,6 @@ function PhaseCard({
 export default function EnhancedDeliveryPage() {
   const horizontalScrollRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      lerp: 0.05,
-      wheelMultiplier: 0.8,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    return () => {
-      lenis.destroy();
-    };
-  }, []);
 
   const { scrollYProgress: horizontalScrollProgress } = useScroll({
     target: horizontalScrollRef,
