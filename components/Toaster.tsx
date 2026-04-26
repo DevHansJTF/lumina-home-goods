@@ -19,7 +19,7 @@ export default function Toaster() {
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
             className={`pointer-events-auto flex items-center gap-4 px-6 py-4 shadow-xl text-xs font-medium border ${
               toast.type === "success"
-                ? "bg-[#D97757] text-white border-transparent"
+                ? "bg-green-600 text-white border-transparent"
                 : toast.type === "error"
                   ? "bg-red-600 text-white border-transparent"
                   : "bg-[#141414] dark:bg-[#1A1A1A] text-white border-transparent dark:border-gray-800"

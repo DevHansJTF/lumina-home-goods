@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function CheckoutPage() {
   const { cart, updateQuantity, removeFromCart, cartTotal, clearCart, addToast } = useStore();
@@ -53,186 +54,289 @@ export default function CheckoutPage() {
     }
   };
 
+  // Animation variants
+  const containerVars = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  };
+
+  const itemVars = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+    },
+    exit: { opacity: 0, x: -20, transition: { duration: 0.3 } },
+  };
+
   if (cart.length === 0) {
     return (
-      <div className="max-w-5xl mx-auto px-6 md:px-12 py-24 text-center">
-        <h1 className="font-serif text-3xl md:text-4xl text-[#141414] dark:text-[#EAEAEA] mb-6">
-          Your Selection is Empty
-        </h1>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mb-10">
-          Looks like you haven&apos;t added any items to your inquiry yet.
-        </p>
-        <Link
-          href="/products"
-          className="inline-flex items-center justify-center px-10 py-4 bg-[#141414] dark:bg-[#EAEAEA] text-white dark:text-[#111111] text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-black dark:hover:bg-white transition-colors"
+      <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0A] flex flex-col items-center justify-center px-6 transition-colors duration-300">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="text-center"
         >
-          Explore Gallery
-        </Link>
+          <div className="mb-12 relative flex justify-center">
+            <motion.div
+              animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute inset-0 bg-[#C5A059] blur-[60px] rounded-full w-24 h-24 mx-auto"
+            />
+            <div className="w-24 h-24 border border-gray-200 dark:border-gray-800 rounded-full flex items-center justify-center relative z-10 bg-[#FAFAFA] dark:bg-[#0A0A0A]">
+              <span className="text-2xl text-gray-400">0</span>
+            </div>
+          </div>
+          <h1 className="font-serif text-4xl md:text-5xl text-[#141414] dark:text-[#EAEAEA] mb-6 tracking-tight">
+            Your Cart is Empty
+          </h1>
+          <p className="text-lg text-gray-500 dark:text-gray-400 mb-12 max-w-md mx-auto font-light leading-relaxed">
+            Begin curating your sanctuary. Discover pieces that elevate your space.
+          </p>
+          <Link
+            href="/products"
+            className="group relative inline-flex items-center justify-center gap-4 bg-[#141414] dark:bg-white text-white dark:text-[#111111] px-12 py-5 rounded-full text-xs uppercase tracking-[0.2em] font-bold overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl shadow-black/10 dark:shadow-white/5"
+          >
+            <span className="relative z-10">Explore Collections</span>
+            <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+            <div className="absolute inset-0 bg-[#C5A059] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left ease-out duration-500 border border-[#C5A059]" />
+          </Link>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-screen-xl mx-auto px-6 md:px-12 py-16 md:py-24">
-      <h1 className="font-serif text-4xl md:text-5xl text-[#141414] dark:text-[#EAEAEA] mb-12 border-b border-gray-200 dark:border-gray-800 pb-6">
-        Your Selection
-      </h1>
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0A] text-[#141414] dark:text-[#EAEAEA] selection:bg-[#C5A059] selection:text-white transition-colors duration-300">
+      <section className="pt-40 md:pt-48 pb-12 px-6 max-w-screen-2xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <span className="text-[#C5A059] uppercase tracking-[0.4em] text-xs font-bold mb-6 block">Inquiry</span>
+          <h1 className="text-5xl md:text-7xl font-serif tracking-tighter mb-4 text-[#141414] dark:text-white pb-6 border-b border-gray-200 dark:border-gray-800">
+            Your Folio
+          </h1>
+        </motion.div>
+      </section>
 
-      <div className="flex flex-col lg:flex-row gap-16">
-        {/* Cart Review */}
-        <div className="flex-1">
-          <div className="space-y-8">
-            {cart.map((item) => (
-              <div key={item.id} className="flex gap-6 items-start border-b border-gray-100 dark:border-gray-800 pb-8">
-                <div className="relative w-24 h-24 bg-[#F5F5F5] dark:bg-[#1A1A1A] flex-shrink-0">
-                  <Image
-                    src={item.image.startsWith("http") || item.image.startsWith("/") ? item.image : `/${item.image}`}
-                    alt={item.name}
-                    fill
-                    className="object-cover"
+      <section className="px-6 pb-32 max-w-screen-2xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-16 xl:gap-24">
+          {/* Cart Items */}
+          <div className="flex-1">
+            <motion.div variants={containerVars} initial="hidden" animate="show" className="space-y-12">
+              <AnimatePresence mode="popLayout">
+                {cart.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    variants={itemVars}
+                    layout
+                    className="group flex flex-col sm:flex-row gap-8 items-start sm:items-center py-6 border-b border-gray-200/60 dark:border-gray-800/60 transition-colors hover:border-[#C5A059]/30"
+                  >
+                    <div className="relative w-full sm:w-32 h-40 sm:h-32 bg-gray-100 dark:bg-[#111111] flex-shrink-0 overflow-hidden">
+                      <Image
+                        src={
+                          item.image.startsWith("http") || item.image.startsWith("/") ? item.image : `/${item.image}`
+                        }
+                        alt={item.name}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+
+                    <div className="flex-1 w-full">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h5 className="text-lg font-serif tracking-tight text-[#141414] dark:text-[#EAEAEA]">
+                            {item.name}
+                          </h5>
+                          <p className="text-xs uppercase tracking-widest text-gray-400 mt-2">{item.category}</p>
+                        </div>
+                        <div className="text-lg font-serif text-[#141414] dark:text-[#EAEAEA]">
+                          ${(item.price * item.quantity).toFixed(2)}
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-end mt-8">
+                        <div className="flex items-center border border-gray-200 dark:border-gray-800 rounded-full p-1 bg-white dark:bg-[#111111]">
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:text-[#141414] hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-800 transition-colors"
+                          >
+                            <Minus className="w-3 h-3" />
+                          </button>
+                          <span className="text-xs font-medium w-8 text-center">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="w-8 h-8 rounded-full flex items-center justify-center text-gray-500 hover:text-[#141414] hover:bg-gray-100 dark:hover:text-white dark:hover:bg-gray-800 transition-colors"
+                          >
+                            <Plus className="w-3 h-3" />
+                          </button>
+                        </div>
+
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-gray-400 hover:text-red-500 transition-colors"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                          <span>Remove</span>
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="mt-12 flex justify-between items-end border-t border-gray-200 dark:border-gray-800 pt-8"
+            >
+              <div>
+                <span className="block text-[#C5A059] text-[10px] uppercase tracking-[0.2em] font-bold mb-2">
+                  Estimation
+                </span>
+                <span className="opacity-50 text-xs uppercase tracking-widest">Total Value</span>
+              </div>
+              <div className="text-right">
+                <span className="block font-serif text-4xl md:text-5xl">${cartTotal.toFixed(2)}</span>
+                <p className="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">
+                  Shipping & taxes calculated prior to finalization.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            className="w-full lg:w-[460px] xl:w-[500px]"
+          >
+            <div className="bg-white dark:bg-[#111111] border border-gray-200 dark:border-gray-800 p-8 md:p-12 sticky top-32 shadow-2xl shadow-black/5 dark:shadow-none">
+              <h3 className="font-serif text-3xl text-[#141414] dark:text-[#EAEAEA] mb-4">Finalize Request</h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-10 font-light leading-relaxed">
+                Provide your details to initiate the acquisition process. A dedicated concierge will contact you with a
+                formal proposal.
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="relative z-0">
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    className="block py-3 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 appearance-none dark:text-white dark:focus:border-[#C5A059] focus:outline-none focus:ring-0 focus:border-[#141414] peer"
+                    placeholder=" "
                   />
+                  <label
+                    htmlFor="name"
+                    className="absolute text-xs text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#141414] dark:peer-focus:text-[#C5A059] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-widest"
+                  >
+                    Full Name
+                  </label>
                 </div>
 
-                <div className="flex-1">
-                  <h5 className="text-xs font-semibold uppercase tracking-tighter text-[#141414] dark:text-[#EAEAEA]">
-                    {item.name}
-                  </h5>
-                  <p className="text-[11px] text-gray-400 mt-1 italic">{item.category}</p>
+                <div className="relative z-0">
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    className="block py-3 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 appearance-none dark:text-white dark:focus:border-[#C5A059] focus:outline-none focus:ring-0 focus:border-[#141414] peer"
+                    placeholder=" "
+                  />
+                  <label
+                    htmlFor="email"
+                    className="absolute text-xs text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#141414] dark:peer-focus:text-[#C5A059] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-widest"
+                  >
+                    Email Address
+                  </label>
+                </div>
 
-                  <div className="flex justify-between items-center mt-4">
-                    <div className="flex items-center gap-4 border border-gray-200 dark:border-gray-700 px-3 py-1">
-                      <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                        className="text-xs text-gray-500 dark:text-gray-400 hover:text-[#141414] dark:hover:text-[#EAEAEA]"
-                      >
-                        <Minus className="w-3 h-3" />
-                      </button>
-                      <span className="text-[11px] font-medium w-4 text-center dark:text-[#EAEAEA]">
-                        {item.quantity}
-                      </span>
-                      <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                        className="text-xs text-gray-500 dark:text-gray-400 hover:text-[#141414] dark:hover:text-[#EAEAEA]"
-                      >
-                        <Plus className="w-3 h-3" />
-                      </button>
-                    </div>
+                <div className="relative z-0">
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    required
+                    className="block py-3 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 appearance-none dark:text-white dark:focus:border-[#C5A059] focus:outline-none focus:ring-0 focus:border-[#141414] peer"
+                    placeholder=" "
+                  />
+                  <label
+                    htmlFor="address"
+                    className="absolute text-xs text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#141414] dark:peer-focus:text-[#C5A059] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-widest"
+                  >
+                    Delivery Address
+                  </label>
+                </div>
 
-                    <div className="flex items-center gap-6">
-                      <div className="text-xs font-medium text-[#141414] dark:text-[#EAEAEA]">
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </div>
-                      <button
-                        onClick={() => removeFromCart(item.id)}
-                        className="text-[10px] uppercase tracking-widest text-gray-400 hover:text-red-500 transition-colors"
-                      >
-                        Remove
-                      </button>
-                    </div>
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="relative z-0">
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      required
+                      className="block py-3 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 appearance-none dark:text-white dark:focus:border-[#C5A059] focus:outline-none focus:ring-0 focus:border-[#141414] peer"
+                      placeholder=" "
+                    />
+                    <label
+                      htmlFor="city"
+                      className="absolute text-xs text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#141414] dark:peer-focus:text-[#C5A059] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-widest"
+                    >
+                      City
+                    </label>
+                  </div>
+                  <div className="relative z-0">
+                    <input
+                      type="text"
+                      id="zip"
+                      name="zip"
+                      required
+                      className="block py-3 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 appearance-none dark:text-white dark:focus:border-[#C5A059] focus:outline-none focus:ring-0 focus:border-[#141414] peer"
+                      placeholder=" "
+                    />
+                    <label
+                      htmlFor="zip"
+                      className="absolute text-xs text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-[#141414] dark:peer-focus:text-[#C5A059] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-widest"
+                    >
+                      Postal Code
+                    </label>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
 
-          <div className="mt-8 flex justify-between items-center text-sm md:text-base font-medium text-[#141414] dark:text-[#EAEAEA]">
-            <span className="opacity-50 text-xs uppercase tracking-widest">Est. Inquiry Value</span>
-            <span className="font-sans text-2xl">${cartTotal.toFixed(2)}</span>
-          </div>
-          <p className="text-[10px] text-gray-400 mt-3 text-right italic">
-            Shipping and taxes calculated after inquiry review.
-          </p>
-        </div>
-
-        {/* Inquiry Form */}
-        <div className="w-full lg:w-[420px]">
-          <div className="bg-[#FAFAFA] dark:bg-[#1A1A1A] border border-gray-200 dark:border-gray-800 p-8 md:p-10 sticky top-28">
-            <h3 className="font-serif text-xl text-[#141414] dark:text-[#EAEAEA] mb-3">Request a Quote</h3>
-            <p className="text-[11px] text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
-              Submit your details. Our design team will review your selection and follow up with a finalized quote and
-              shipping estimate.
-            </p>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="space-y-2">
-                <label htmlFor="name" className="text-[10px] uppercase tracking-widest text-gray-500">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  className="w-full px-4 py-3 border border-gray-200 focus:border-[#141414] focus:ring-0 outline-none bg-white text-sm text-[#141414] transition-colors rounded-none"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="email" className="text-[10px] uppercase tracking-widest text-gray-500">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  className="w-full px-4 py-3 border border-gray-200 focus:border-[#141414] focus:ring-0 outline-none bg-white text-sm text-[#141414] transition-colors rounded-none"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label htmlFor="address" className="text-[10px] uppercase tracking-widest text-gray-500">
-                  Shipping Address
-                </label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  required
-                  className="w-full px-4 py-3 border border-gray-200 focus:border-[#141414] focus:ring-0 outline-none bg-white text-sm text-[#141414] transition-colors rounded-none"
-                />
-              </div>
-
-              <div className="flex gap-4">
-                <div className="space-y-2 flex-1">
-                  <label htmlFor="city" className="text-[10px] uppercase tracking-widest text-gray-500">
-                    City
-                  </label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    required
-                    className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 focus:border-[#141414] dark:focus:border-[#EAEAEA] focus:ring-0 outline-none bg-white dark:bg-[#111111] text-sm text-[#141414] dark:text-[#EAEAEA] transition-colors rounded-none"
-                  />
+                <div className="pt-4 text-center">
+                  <p className="text-[10px] text-gray-400 mb-6 uppercase tracking-widest font-bold">
+                    No payment required at this step.
+                  </p>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="group relative inline-flex items-center justify-center gap-4 bg-[#141414] dark:bg-white text-white dark:text-[#111111] w-full py-5 rounded-full text-xs uppercase tracking-[0.2em] font-bold overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:pointer-events-none"
+                  >
+                    <span className="relative z-10">{isSubmitting ? "Transmitting..." : "Submit Inquiry"}</span>
+                    {!isSubmitting && (
+                      <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+                    )}
+                    <div className="absolute inset-0 bg-[#C5A059] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left ease-out duration-500 border border-[#C5A059] rounded-full" />
+                  </button>
                 </div>
-                <div className="space-y-2 w-1/3">
-                  <label htmlFor="zip" className="text-[10px] uppercase tracking-widest text-gray-500">
-                    ZIP
-                  </label>
-                  <input
-                    type="text"
-                    id="zip"
-                    name="zip"
-                    required
-                    className="w-full px-4 py-3 border border-gray-200 dark:border-gray-800 focus:border-[#141414] dark:focus:border-[#EAEAEA] focus:ring-0 outline-none bg-white dark:bg-[#111111] text-sm text-[#141414] dark:text-[#EAEAEA] transition-colors rounded-none"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-[#141414] dark:bg-[#EAEAEA] hover:bg-black dark:hover:bg-white text-white dark:text-[#111111] py-4 text-[11px] uppercase tracking-[0.2em] font-bold shadow-lg transition-colors mt-8 rounded-none disabled:opacity-70"
-              >
-                {isSubmitting ? "Submitting..." : "Submit Order Inquiry"}
-              </button>
-
-              <p className="text-[10px] text-center text-gray-400 mt-6 italic">No payment required at this step.</p>
-            </form>
-          </div>
+              </form>
+            </div>
+          </motion.div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import Lenis from "lenis";
 
 const sections = [
   {
@@ -55,25 +54,12 @@ function CheckpointDiv({
 export default function AboutPage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Initialize Lenis for luxurious, smooth scroll
+  // Initialize scroll snapping
   useEffect(() => {
-    const lenis = new Lenis({
-      lerp: 0.05, // Lower means smoother and slightly slower
-      wheelMultiplier: 0.8, // Slightly softer mouse wheel
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
     // Apply native CSS scroll snapping to the document to create the magnetic section effect
     document.documentElement.classList.add("snap-y", "snap-mandatory");
 
     return () => {
-      lenis.destroy();
       document.documentElement.classList.remove("snap-y", "snap-mandatory");
     };
   }, []);
@@ -168,7 +154,7 @@ export default function AboutPage() {
               className="relative w-80 md:w-[32rem] aspect-square drop-shadow-2xl flex items-center justify-center will-change-transform"
             >
               <Image
-                src="/lumina-logo-2.png"
+                src="/lumina-logo-3.png"
                 alt="Lumina Signature Logo"
                 fill
                 unoptimized
