@@ -13,7 +13,7 @@ const deliveryPhases = [
     description:
       "Every piece undergoes a final multi-point inspection by our master artisans before being secured in custom-built, climate-resistant casing designed exclusively for its dimensions.",
     icon: Package,
-    image: "https://images.unsplash.com/photo-1615800098779-1e32dc39b1eb?q=80&w=2000&auto=format&fit=crop",
+    image: "authentication-casing.jpg",
   },
   {
     num: "02",
@@ -21,15 +21,15 @@ const deliveryPhases = [
     description:
       "We bypass standard couriers. Our partnerships with elite, private logistics networks ensure your artifact crosses oceans and borders with zero friction and absolute priority.",
     icon: Globe,
-    image: "https://images.unsplash.com/photo-1542296332-2e4473faf563?q=80&w=2000&auto=format&fit=crop",
+    image: "global-transit-network.jpg",
   },
   {
     num: "03",
     title: "White Glove Installation",
     description:
-      "Our dedicated installation team doesn't just deliver; they orchestrate the final placement. We handle unboxing, assembly, and precise positioning within your sanctuary.",
+      "Our dedicated installation team doesn't just deliver, they orchestrate the final placement. We handle unboxing, assembly, and precise positioning within your sanctuary.",
     icon: MapPin,
-    image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop",
+    image: "glove-installation.jpg",
   },
   {
     num: "04",
@@ -37,7 +37,7 @@ const deliveryPhases = [
     description:
       "A formal transfer of ownership. You receive the physical Certificate of Authenticity, care guides, and the digital provenance records, marking the completion of the journey.",
     icon: ShieldCheck,
-    image: "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?q=80&w=2000&auto=format&fit=crop",
+    image: "handover.jpg",
   },
 ];
 
@@ -85,7 +85,8 @@ function PhaseCard({
           alt={phase.title}
           fill
           unoptimized
-          className="object-cover grayscale mix-blend-overlay"
+          className="object-cover grayscale mix-blend-overlay text-transparent"
+          referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#FAFAFA] dark:from-[#0A0A0A] via-[#FAFAFA]/80 dark:via-[#0A0A0A]/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#FAFAFA] dark:from-[#0A0A0A] via-transparent to-[#FAFAFA] dark:to-[#0A0A0A]" />
@@ -190,18 +191,24 @@ export default function EnhancedDeliveryPage() {
             Uncompromising transport tailored for the world&apos;s most discerning collectors. Every mile carefully
             orchestrated.
           </motion.p>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 48 }}
-            transition={{ delay: 1, duration: 1, ease: "easeOut" }}
-            className="absolute -bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 text-gray-500"
-          >
-            <span className="text-[10px] uppercase tracking-[0.2em] transform rotate-90 translate-y-12 shrink-0">
-              Scroll
-            </span>
-            <div className="w-[1px] h-full bg-gradient-to-b from-[#C5A059] to-transparent" />
-          </motion.div>
+        {/* Elegant Scroll Indicator */}
+        <motion.div
+          style={{ opacity: heroOpacity }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
+        >
+          <span className="text-[9px] uppercase tracking-widest text-[#141414]/50 dark:text-white/50">Scroll</span>
+          <div className="w-[1px] h-12 bg-[#141414]/20 dark:bg-white/20 relative overflow-hidden">
+            <motion.div
+              animate={{ y: ["-100%", "100%"] }}
+              transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+              className="absolute top-0 left-0 w-full h-full bg-[#141414] dark:bg-white"
+            />
+          </div>
         </motion.div>
       </section>
 
@@ -266,7 +273,7 @@ export default function EnhancedDeliveryPage() {
             className="text-gray-600 dark:text-gray-400 md:text-xl font-light leading-relaxed mb-16 max-w-2xl mx-auto"
           >
             From the moment it leaves our hands to the second it rests in yours, your piece is protected by
-            comprehensive, zero-deductible transit insurance underwritten by Lloyds of London.
+            comprehensive, zero-deductible transit insurance.
           </motion.p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-white/10 pt-16 mt-16 text-left relative">
@@ -305,11 +312,12 @@ export default function EnhancedDeliveryPage() {
       <section className="relative h-[80vh] flex items-center justify-center overflow-hidden bg-gray-100 dark:bg-black transition-colors duration-300">
         <div className="absolute inset-0 pointer-events-none">
           <Image
-            src="https://images.unsplash.com/photo-1615800098779-1e32dc39b1eb?q=80&w=2000&auto=format&fit=crop"
+            src="https://picsum.photos/seed/delivery-footer/1920/1080"
             alt="Background Texture"
             fill
             unoptimized
-            className="object-cover grayscale mix-blend-screen opacity-30"
+            referrerPolicy="no-referrer"
+            className="object-cover grayscale mix-blend-screen opacity-30 text-transparent"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-100 dark:from-black via-gray-100/80 dark:via-black/80 to-white/0 dark:to-[#111111]" />
         </div>

@@ -122,16 +122,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setCart((prev) => prev.filter((item) => item.id !== productId));
   }, []);
 
-  const updateQuantity = React.useCallback(
-    (productId: string, quantity: number) => {
-      if (quantity <= 0) {
-        removeFromCart(productId);
-        return;
-      }
-      setCart((prev) => prev.map((item) => (item.id === productId ? { ...item, quantity } : item)));
-    },
-    [removeFromCart],
-  );
+  const updateQuantity = React.useCallback((productId: string, quantity: number) => {
+    if (quantity < 1) {
+      return;
+    }
+    setCart((prev) => prev.map((item) => (item.id === productId ? { ...item, quantity } : item)));
+  }, []);
 
   const clearCart = React.useCallback(() => setCart([]), []);
 

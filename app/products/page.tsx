@@ -111,7 +111,7 @@ export default function ProductsPage() {
             The Master <br />
             <span className="italic text-gray-400 dark:text-gray-500">Collection.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-light leading-relaxed max-w-2xl">
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-light leading-relaxed max-w-2xl">
             A definitive curation of avant-garde seating and architectural lighting, crafted to define the sanctuaries
             of tomorrow.
           </p>
@@ -128,7 +128,7 @@ export default function ProductsPage() {
         >
           {/* Categories Filter */}
           <div className="w-full lg:w-auto">
-            <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-6 flex items-center gap-2">
+            <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-500 dark:text-gray-400 mb-6 flex items-center gap-2">
               <Filter className="w-3 h-3" /> Categorization
             </h3>
             <div className="flex flex-wrap gap-8">
@@ -139,7 +139,7 @@ export default function ProductsPage() {
                   className={`text-xs uppercase tracking-widest pb-2 transition-all relative ${
                     selectedCategory === category
                       ? "text-[#141414] dark:text-white font-semibold"
-                      : "text-gray-400 dark:text-gray-500 hover:text-[#141414] dark:hover:text-[#EAEAEA]"
+                      : "text-gray-500 dark:text-gray-400 hover:text-[#141414] dark:hover:text-[#EAEAEA]"
                   }`}
                 >
                   {category}
@@ -162,9 +162,9 @@ export default function ProductsPage() {
                 placeholder="Discipline, name, or materiality..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-0 pr-10 py-2 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 text-sm focus:outline-none focus:ring-0 focus:border-[#C5A059] dark:focus:border-[#C5A059] transition-colors text-[#141414] dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-600 appearance-none"
+                className="w-full pl-0 pr-10 py-2 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 text-sm focus:outline-none focus:ring-0 focus:border-[#C5A059] dark:focus:border-[#C5A059] transition-colors text-[#141414] dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-500 appearance-none"
               />
-              <Search className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 dark:text-gray-400" />
             </div>
 
             {/* Sort */}

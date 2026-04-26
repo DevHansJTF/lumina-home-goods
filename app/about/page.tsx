@@ -32,7 +32,7 @@ const sections = [
     title: "Timeless Permanence",
     subtitle: "The Artifact",
     content:
-      "A Lumina product is not built for a season; it is forged for a lifetime. Our goal is to create heirloom-quality artifacts that will age gracefully, accumulating character and stories across generations.",
+      "A Lumina product is not built for a season, it is forged for a lifetime. Our goal is to create heirloom-quality artifacts that will age gracefully, accumulating character and stories across generations.",
     align: "left",
   },
 ];
@@ -151,14 +151,14 @@ export default function AboutPage() {
           >
             <motion.div
               style={{ rotate: logoRotate, scale: imageScale }}
-              className="relative w-80 md:w-[32rem] aspect-square drop-shadow-2xl flex items-center justify-center will-change-transform"
+              className="relative w-72 md:w-[28rem] aspect-square drop-shadow-2xl flex items-center justify-center will-change-transform"
             >
               <Image
                 src="/lumina-logo-3.png"
                 alt="Lumina Signature Logo"
                 fill
                 unoptimized
-                className="object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.4)]"
+                className="object-contain drop-shadow-[0_10px_17px_rgba(0,0,0,0.4)]"
                 onError={(e) => {
                   e.currentTarget.src =
                     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M60 40 L90 40 L90 140 C90 150, 100 160, 110 160 C120 160, 130 150, 130 140 L130 120 L160 120 L160 140 C160 170, 140 190, 110 190 C80 190, 60 170, 60 140 Z' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23C5A059'/%3E%3Cstop offset='100%25' stop-color='%238c6d32'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E";

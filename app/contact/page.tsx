@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import { useStore } from "@/lib/store";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus, ArrowRight } from "lucide-react";
+import { Plus, Minus, ArrowRight, Check } from "lucide-react";
+import { processContact } from "@/app/actions/contact";
 
 const faqs = [
   {
@@ -68,16 +69,38 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
 export default function ContactPage() {
   const { addToast } = useStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDetailsConfirmed, setIsDetailsConfirmed] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isDetailsConfirmed) {
+      addToast("Please confirm your details are correct before proceeding.", "info");
+      return;
+    }
+
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      subject: formData.get("subject"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const response = await processContact(data);
+      if (response.success) {
+        addToast("Your inquiry has been received. Our concierge will contact you shortly.", "success");
+        (e.target as HTMLFormElement).reset();
+        setIsDetailsConfirmed(false);
+      }
+    } catch (error) {
+      addToast("Failed to send inquiry. Please try again.", "error");
+    } finally {
       setIsSubmitting(false);
-      addToast("Your inquiry has been received. Our concierge will contact you shortly.", "success");
-      (e.target as HTMLFormElement).reset();
-    }, 1500);
+    }
   };
 
   return (
@@ -93,9 +116,9 @@ export default function ContactPage() {
           <span className="text-[#C5A059] uppercase tracking-[0.4em] text-xs font-bold mb-8 block">Concierge</span>
           <h1 className="text-6xl md:text-8xl lg:text-[7rem] font-serif leading-[0.9] tracking-tighter mb-8 text-[#141414] dark:text-white">
             Let&apos;s shape your <br />
-            <span className="italic text-gray-400 dark:text-gray-500">sanctuary.</span>
+            <span className="italic text-gray-500 dark:text-gray-400">sanctuary.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-light leading-relaxed max-w-2xl">
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 font-light leading-relaxed max-w-2xl">
             Whether inquiring about a bespoke commission, an existing order, or seeking design consultation, we are at
             your service.
           </p>
@@ -114,7 +137,7 @@ export default function ContactPage() {
             className="lg:col-span-5 space-y-16"
           >
             <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">
+              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-500 dark:text-gray-400 mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">
                 Atelier Location
               </h3>
               <p className="font-serif text-2xl md:text-3xl leading-relaxed mb-4">
@@ -124,16 +147,10 @@ export default function ContactPage() {
                 <br />
                 75003 France
               </p>
-              <a
-                href="#"
-                className="inline-flex items-center gap-2 text-sm uppercase tracking-widest hover:text-[#C5A059] transition-colors border-b border-transparent hover:border-[#C5A059] pb-1"
-              >
-                View on Map <ArrowRight className="w-4 h-4" />
-              </a>
             </div>
 
             <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">
+              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-500 dark:text-gray-400 mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">
                 Direct Inquiry
               </h3>
               <div className="space-y-4">
@@ -147,13 +164,13 @@ export default function ContactPage() {
                   href="tel:+33140205050"
                   className="block font-serif text-2xl md:text-3xl hover:text-[#C5A059] transition-colors"
                 >
-                  +33 1 40 20 50 50
+                  +42 0 67 76 80 42
                 </a>
               </div>
             </div>
 
             <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-400 mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">
+              <h3 className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-500 dark:text-gray-400 mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">
                 Visiting Hours
               </h3>
               <div className="grid grid-cols-2 gap-4 text-gray-500 dark:text-gray-400 text-sm">
@@ -183,6 +200,7 @@ export default function ContactPage() {
                     <input
                       type="text"
                       id="name"
+                      name="name"
                       required
                       className="block py-3 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 appearance-none dark:text-white dark:focus:border-[#C5A059] focus:outline-none focus:ring-0 focus:border-[#141414] peer"
                       placeholder=" "
@@ -198,6 +216,7 @@ export default function ContactPage() {
                     <input
                       type="email"
                       id="email"
+                      name="email"
                       required
                       className="block py-3 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 appearance-none dark:text-white dark:focus:border-[#C5A059] focus:outline-none focus:ring-0 focus:border-[#141414] peer"
                       placeholder=" "
@@ -215,6 +234,7 @@ export default function ContactPage() {
                   <input
                     type="text"
                     id="subject"
+                    name="subject"
                     required
                     className="block py-3 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 appearance-none dark:text-white dark:focus:border-[#C5A059] focus:outline-none focus:ring-0 focus:border-[#141414] peer"
                     placeholder=" "
@@ -230,6 +250,7 @@ export default function ContactPage() {
                 <div className="relative z-0">
                   <textarea
                     id="message"
+                    name="message"
                     required
                     rows={4}
                     className="block py-3 px-0 w-full text-lg text-gray-900 bg-transparent border-0 border-b border-gray-300 dark:border-gray-700 appearance-none dark:text-white dark:focus:border-[#C5A059] focus:outline-none focus:ring-0 focus:border-[#141414] peer resize-none"
@@ -244,10 +265,35 @@ export default function ContactPage() {
                 </div>
 
                 <div className="pt-6">
+                  <label className="flex items-center cursor-pointer group mb-6">
+                    <div className="relative flex items-center justify-center w-5 h-5 mr-3 border border-gray-300 dark:border-gray-700 rounded-sm bg-transparent group-hover:border-[#C5A059] transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={isDetailsConfirmed}
+                        onChange={(e) => setIsDetailsConfirmed(e.target.checked)}
+                        className="opacity-0 absolute inset-0 cursor-pointer w-full h-full z-10"
+                      />
+                      <AnimatePresence>
+                        {isDetailsConfirmed && (
+                          <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            className="absolute inset-0 bg-[#C5A059] flex items-center justify-center"
+                          >
+                            <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                    <span className="text-sm font-light text-gray-500 dark:text-gray-400 group-hover:text-[#141414] dark:group-hover:text-white transition-colors select-none">
+                      I confirm my details are correct
+                    </span>
+                  </label>
                   <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="group relative inline-flex items-center justify-center gap-4 bg-[#141414] dark:bg-white text-white dark:text-[#111111] px-12 py-6 rounded-full text-xs uppercase tracking-[0.2em] font-bold overflow-hidden transition-all hover:scale-105 active:scale-95 disabled:opacity-70 disabled:pointer-events-none w-full md:w-auto"
+                    disabled={isSubmitting || !isDetailsConfirmed}
+                    className="group relative inline-flex items-center justify-center gap-4 bg-[#141414] dark:bg-white text-white dark:text-[#111111] px-12 py-6 rounded-full text-xs uppercase tracking-[0.2em] font-bold overflow-hidden transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:pointer-events-none w-full md:w-auto"
                   >
                     <span className="relative z-10">{isSubmitting ? "Transmitting..." : "Submit Inquiry"}</span>
                     {!isSubmitting && (
