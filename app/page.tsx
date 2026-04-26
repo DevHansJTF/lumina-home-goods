@@ -35,19 +35,19 @@ const testimonials = [
   {
     quote:
       "Lumina Studio transformed our living space into a sanctuary of peace and elegance. The attention to detail is truly unparalleled.",
-    author: "Sarah Jenkins",
+    author: "Yvonne James",
     role: "Interior Architect",
   },
   {
     quote:
       "The craftsmanship is breathtaking. Each piece feels less like furniture and more like a functional work of art.",
-    author: "David Chen",
+    author: "Bingsu Madrigal",
     role: "Private Collector",
   },
   {
     quote:
       "A paradigm shift in modern design. Their curations define the aesthetic of tomorrow's most beautiful homes.",
-    author: "Elena Rossi",
+    author: "Suguru Getto",
     role: "Design Review",
   },
 ];
@@ -116,7 +116,7 @@ export default function Home() {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="text-[#C5A059] uppercase tracking-[0.4em] text-xs font-bold mb-6 block drop-shadow-md">
-              Lumina Studio
+              Lumina Furniture Services
             </span>
           </motion.div>
 
@@ -242,10 +242,10 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
                   <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col justify-end text-white z-10">
                     <h4 className="font-sans font-semibold text-xl leading-tight mb-1">{product.name}</h4>
-                    <p className="text-gray-300 text-xs tracking-wider mb-3">Lumina Collection</p>
+                    <p className="text-gray-100 text-xs tracking-wider mb-3">Lumina Collection</p>
                     <p className="text-white font-medium">
                       Price: ${product.price.toFixed(2)}{" "}
-                      <span className="line-through text-gray-400 text-sm ml-2">
+                      <span className="line-through text-gray-300 text-sm ml-2">
                         ${(product.price * 1.1).toFixed(2)}
                       </span>
                     </p>
@@ -274,11 +274,11 @@ export default function Home() {
             <span className="text-[#C5A059] uppercase tracking-[0.3em] text-xs font-bold mb-6">The Process</span>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-8 leading-tight">
               Honoring the <br />
-              <span className="italic text-gray-400">Material.</span>
+              <span className="italic text-gray-500 dark:text-gray-400">Material.</span>
             </h2>
-            <p className="text-lg text-gray-400 font-light leading-relaxed mb-10 max-w-lg">
-              We collaborate with master artisans worldwide. Each piece is an exercise in restraint—stripping away the
-              unnecessary to reveal the raw beauty of solid woods, cast metals, and hand-woven textiles.
+            <p className="text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed mb-10 max-w-lg">
+              We collaborate with master artisans worldwide. Each piece is an exercise in restraint stripping away the
+              unnecessary to reveal the raw beauty of solid woods, cast metals, and hand woven textiles.
             </p>
             <div className="grid grid-cols-2 gap-8">
               <div>
@@ -304,7 +304,7 @@ export default function Home() {
         >
           <span className="text-[#C5A059] uppercase tracking-[0.3em] text-xs font-bold mb-6">Voices</span>
           <h2 className="text-4xl md:text-5xl font-serif text-[#141414] dark:text-white">
-            Words of <span className="italic text-gray-400 dark:text-gray-500">Praise.</span>
+            Words of <span className="italic text-gray-500 dark:text-gray-400">Praise.</span>
           </h2>
         </motion.div>
 

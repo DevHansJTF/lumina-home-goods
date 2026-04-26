@@ -5,17 +5,24 @@ import { useStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Minus, Plus, Trash2, ArrowRight } from "lucide-react";
+import { Minus, Plus, Trash2, ArrowRight, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { processCheckout } from "@/app/actions/checkout";
 
 export default function CheckoutPage() {
   const { cart, updateQuantity, removeFromCart, cartTotal, clearCart, addToast } = useStore();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDetailsConfirmed, setIsDetailsConfirmed] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (cart.length === 0) return;
+    if (!isDetailsConfirmed) {
+      addToast("Please confirm your details are correct before proceeding.", "info");
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -31,16 +38,8 @@ export default function CheckoutPage() {
     };
 
     try {
-      // Simulate webhook POST request
-      const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
+      const response = await processCheckout(data);
+      if (response.success) {
         clearCart();
         addToast("Your inquiry has been sent! We will email you shortly.", "success");
         router.push("/");
@@ -158,7 +157,7 @@ export default function CheckoutPage() {
                           </h5>
                           <p className="text-xs uppercase tracking-widest text-gray-400 mt-2">{item.category}</p>
                         </div>
-                        <div className="text-lg font-serif text-[#141414] dark:text-[#EAEAEA]">
+                        <div className="text-lg font-sans text-[#141414] dark:text-[#EAEAEA]">
                           ${(item.price * item.quantity).toFixed(2)}
                         </div>
                       </div>
@@ -181,7 +180,7 @@ export default function CheckoutPage() {
                         </div>
 
                         <button
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => setItemToRemove(item.id)}
                           className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-gray-400 hover:text-red-500 transition-colors"
                         >
                           <Trash2 className="w-3 h-3" />
@@ -207,7 +206,7 @@ export default function CheckoutPage() {
                 <span className="opacity-50 text-xs uppercase tracking-widest">Total Value</span>
               </div>
               <div className="text-right">
-                <span className="block font-serif text-4xl md:text-5xl">${cartTotal.toFixed(2)}</span>
+                <span className="block font-sans text-4xl md:text-5xl">${cartTotal.toFixed(2)}</span>
                 <p className="text-[10px] text-gray-400 mt-2 uppercase tracking-widest">
                   Shipping & taxes calculated prior to finalization.
                 </p>
@@ -316,14 +315,42 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
+                <div className="pt-6">
+                  <label className="flex items-center cursor-pointer group">
+                    <div className="relative flex items-center justify-center w-5 h-5 mr-3 border border-gray-300 dark:border-gray-700 rounded-sm bg-transparent group-hover:border-[#C5A059] transition-colors">
+                      <input
+                        type="checkbox"
+                        defaultChecked={false}
+                        className="opacity-0 absolute inset-0 cursor-pointer w-full h-full z-10"
+                        onChange={(e) => setIsDetailsConfirmed(e.target.checked)}
+                      />
+                      <AnimatePresence>
+                        {isDetailsConfirmed && (
+                          <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            className="absolute inset-0 bg-[#C5A059] flex items-center justify-center"
+                          >
+                            <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                    <span className="text-sm font-light text-gray-500 dark:text-gray-400 group-hover:text-[#141414] dark:group-hover:text-white transition-colors select-none">
+                      I confirm my details are correct
+                    </span>
+                  </label>
+                </div>
+
                 <div className="pt-4 text-center">
                   <p className="text-[10px] text-gray-400 mb-6 uppercase tracking-widest font-bold">
                     No payment required at this step.
                   </p>
                   <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="group relative inline-flex items-center justify-center gap-4 bg-[#141414] dark:bg-white text-white dark:text-[#111111] w-full py-5 rounded-full text-xs uppercase tracking-[0.2em] font-bold overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:pointer-events-none"
+                    disabled={isSubmitting || !isDetailsConfirmed}
+                    className="group relative inline-flex items-center justify-center gap-4 bg-[#141414] dark:bg-white text-white dark:text-[#111111] w-full py-5 rounded-full text-xs uppercase tracking-[0.2em] font-bold overflow-hidden transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
                   >
                     <span className="relative z-10">{isSubmitting ? "Transmitting..." : "Submit Inquiry"}</span>
                     {!isSubmitting && (
@@ -337,6 +364,52 @@ export default function CheckoutPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Remove Confirmation Modal */}
+      <AnimatePresence>
+        {itemToRemove && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+              onClick={() => setItemToRemove(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-md bg-white dark:bg-[#111111] border border-gray-200 dark:border-gray-800 shadow-2xl p-8 rounded-2xl"
+            >
+              <h4 className="font-serif text-2xl text-[#141414] dark:text-[#EAEAEA] mb-3">Remove Item?</h4>
+              <p className="text-gray-500 dark:text-gray-400 text-sm font-light leading-relaxed mb-8">
+                Are you sure you want to remove this piece from your folio? This action cannot be undone.
+              </p>
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => setItemToRemove(null)}
+                  className="flex-1 py-3 px-4 rounded-full border border-gray-200 dark:border-gray-800 text-xs uppercase tracking-widest font-bold text-[#141414] dark:text-[#EAEAEA] hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                >
+                  Keep It
+                </button>
+                <button
+                  onClick={() => {
+                    if (itemToRemove) {
+                      removeFromCart(itemToRemove);
+                      setItemToRemove(null);
+                    }
+                  }}
+                  className="flex-1 py-3 px-4 rounded-full bg-red-500 hover:bg-red-600 text-white text-xs uppercase tracking-widest font-bold transition-colors"
+                >
+                  Remove
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

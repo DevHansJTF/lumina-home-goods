@@ -19,7 +19,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   }
 
   return (
-    <div className="max-w-screen-2xl mx-auto px-6 md:px-12 py-12 md:py-20 flex flex-col lg:flex-row gap-12 lg:gap-24">
+    <div className="max-w-screen-2xl mx-auto px-6 md:px-12 pt-32 pb-12 md:pt-40 md:pb-20 flex flex-col lg:flex-row gap-12 lg:gap-24">
       {/* Breadcrumb */}
       <div className="w-full lg:hidden mb-4">
         <Link
