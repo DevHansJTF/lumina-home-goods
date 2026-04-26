@@ -120,7 +120,7 @@ export default function CheckoutPage() {
         >
           <span className="text-[#C5A059] uppercase tracking-[0.4em] text-xs font-bold mb-6 block">Inquiry</span>
           <h1 className="text-5xl md:text-7xl font-serif tracking-tighter mb-4 text-[#141414] dark:text-white pb-6 border-b border-gray-200 dark:border-gray-800">
-            Your Folio
+            Your Cart
           </h1>
         </motion.div>
       </section>
@@ -385,7 +385,7 @@ export default function CheckoutPage() {
             >
               <h4 className="font-serif text-2xl text-[#141414] dark:text-[#EAEAEA] mb-3">Remove Item?</h4>
               <p className="text-gray-500 dark:text-gray-400 text-sm font-light leading-relaxed mb-8">
-                Are you sure you want to remove this piece from your folio? This action cannot be undone.
+                Are you sure you want to remove this piece from your cart? This action cannot be undone.
               </p>
               <div className="flex items-center gap-4">
                 <button

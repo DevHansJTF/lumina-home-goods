@@ -174,7 +174,7 @@ export default function AboutPage() {
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 relative md:static">
               <div className="relative w-[95vw] aspect-square">
                 <Image
-                  src="/lumina-logo-2.png"
+                  src="/lumina-logo-3.png"
                   alt="Logo"
                   fill
                   unoptimized
