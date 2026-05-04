@@ -32,7 +32,7 @@ const sections = [
     title: "Timeless Permanence",
     subtitle: "The Artifact",
     content:
-      "A Lumina product is not built for a season, it is forged for a lifetime. Our goal is to create heirloom-quality artifacts that will age gracefully, accumulating character and stories across generations.",
+      "A Lumina product is not built for a season; it is forged for a lifetime. Our goal is to create heirloom-quality artifacts that will age gracefully, accumulating character and stories across generations.",
     align: "left",
   },
 ];
@@ -57,10 +57,22 @@ export default function AboutPage() {
   // Initialize scroll snapping
   useEffect(() => {
     // Apply native CSS scroll snapping to the document to create the magnetic section effect
-    document.documentElement.classList.add("snap-y", "snap-mandatory");
+    // We only apply this on desktop, as mobile scroll snapping across large sections can feel jarring
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const applySnapping = () => {
+      if (mediaQuery.matches) {
+        document.documentElement.classList.add("snap-y", "snap-mandatory");
+      } else {
+        document.documentElement.classList.remove("snap-y", "snap-mandatory");
+      }
+    };
+
+    applySnapping();
+    mediaQuery.addEventListener("change", applySnapping);
 
     return () => {
       document.documentElement.classList.remove("snap-y", "snap-mandatory");
+      mediaQuery.removeEventListener("change", applySnapping);
     };
   }, []);
 
@@ -158,7 +170,7 @@ export default function AboutPage() {
                 alt="Lumina Signature Logo"
                 fill
                 unoptimized
-                className="object-contain drop-shadow-[0_10px_17px_rgba(0,0,0,0.4)]"
+                className="object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.4)]"
                 onError={(e) => {
                   e.currentTarget.src =
                     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath d='M60 40 L90 40 L90 140 C90 150, 100 160, 110 160 C120 160, 130 150, 130 140 L130 120 L160 120 L160 140 C160 170, 140 190, 110 190 C80 190, 60 170, 60 140 Z' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23C5A059'/%3E%3Cstop offset='100%25' stop-color='%238c6d32'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E";
@@ -171,53 +183,54 @@ export default function AboutPage() {
         {/* Mobile Version Logo Center absolute fixed */}
         <div className="absolute inset-0 z-0 pointer-events-none block md:hidden">
           <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10 relative md:static">
-              <div className="relative w-[95vw] aspect-square">
-                <Image
-                  src="/lumina-logo-3.png"
-                  alt="Logo"
-                  fill
-                  unoptimized
-                  className="object-contain drop-shadow-2xl"
-                />
+            <motion.div
+              style={{ rotate: logoRotate, scale: imageScale }}
+              className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] dark:opacity-[0.07]"
+            >
+              <div className="relative w-[120vw] aspect-square">
+                <Image src="/lumina-logo-2.png" alt="Logo" fill unoptimized className="object-contain" />
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
         {/* Scrollable Content Layer */}
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto overflow-hidden md:overflow-visible pb-24 md:pb-0">
           {sections.map((section, idx) => (
             <section
               key={idx}
-              className={`w-full min-h-[100svh] md:h-screen md:min-h-0 flex flex-col justify-center px-8 md:px-16 py-24 md:py-0 snap-center ${
-                section.align === "left" ? "items-start" : "items-end"
+              className={`w-full min-h-[50svh] md:h-screen md:min-h-0 flex flex-col justify-center px-6 md:px-16 py-20 md:py-0 md:snap-center ${
+                section.align === "left" ? "items-center md:items-start" : "items-center md:items-end"
               }`}
             >
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-20%" }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className={`max-w-xl flex flex-col w-full backdrop-blur-sm md:backdrop-blur-none p-6 md:p-0 rounded-2xl md:rounded-none bg-white/40 dark:bg-black/40 md:bg-transparent md:dark:bg-transparent ${
-                  section.align === "left" ? "text-left items-start" : "text-right items-end"
+                initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-15%" }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className={`max-w-xl flex flex-col w-full p-4 md:p-0 ${
+                  section.align === "left"
+                    ? "text-center md:text-left items-center md:items-start"
+                    : "text-center md:text-right items-center md:items-end"
                 }`}
               >
-                <div className="flex items-center gap-4 mb-6">
+                <div
+                  className={`flex items-center gap-4 mb-8 w-full ${section.align === "left" ? "justify-center md:justify-start" : "justify-center md:justify-end"}`}
+                >
                   {section.align === "right" && (
-                    <div className="hidden md:block h-[1px] w-12 bg-gray-300 dark:bg-gray-700"></div>
+                    <div className="hidden md:block h-[1px] w-12 bg-[#1A1A1A] dark:bg-[#EAEAEA] opacity-30"></div>
                   )}
-                  <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-[#1A1A1A] dark:text-[#EAEAEA]">
+                  <span className="text-[11px] md:text-[10px] uppercase tracking-[0.4em] font-bold text-[#C5A059] md:text-[#1A1A1A] md:dark:text-[#EAEAEA]">
                     0{idx + 1} {"//"} {section.subtitle}
                   </span>
                   {section.align === "left" && (
-                    <div className="hidden md:block h-[1px] w-12 bg-gray-300 dark:bg-gray-700"></div>
+                    <div className="hidden md:block h-[1px] w-12 bg-[#1A1A1A] dark:bg-[#EAEAEA] opacity-30"></div>
                   )}
                 </div>
-                <h2 className="text-4xl md:text-6xl font-serif text-[#1A1A1A] dark:text-[#EAEAEA] mb-6 leading-[1.1] tracking-tight">
+                <h2 className="text-4xl md:text-6xl font-serif text-[#1A1A1A] dark:text-[#EAEAEA] mb-6 leading-[1.15] md:leading-[1.1] tracking-tight">
                   {section.title}
                 </h2>
-                <p className="text-sm md:text-base leading-relaxed text-gray-500 dark:text-gray-400 md:max-w-[85%] font-medium">
+                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400 sm:max-w-[24rem] md:max-w-[85%] font-light">
                   {section.content}
                 </p>
               </motion.div>

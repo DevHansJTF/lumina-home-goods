@@ -35,19 +35,19 @@ const testimonials = [
   {
     quote:
       "Lumina Studio transformed our living space into a sanctuary of peace and elegance. The attention to detail is truly unparalleled.",
-    author: "Yvonne James",
+    author: "Sarah Jenkins",
     role: "Interior Architect",
   },
   {
     quote:
       "The craftsmanship is breathtaking. Each piece feels less like furniture and more like a functional work of art.",
-    author: "Bingsu Madrigal",
+    author: "David Chen",
     role: "Private Collector",
   },
   {
     quote:
       "A paradigm shift in modern design. Their curations define the aesthetic of tomorrow's most beautiful homes.",
-    author: "Suguru Getto",
+    author: "Elena Rossi",
     role: "Design Review",
   },
 ];
@@ -116,7 +116,7 @@ export default function Home() {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           >
             <span className="text-[#C5A059] uppercase tracking-[0.4em] text-xs font-bold mb-6 block drop-shadow-md">
-              Lumina Furniture Services
+              Lumina Studio
             </span>
           </motion.div>
 
@@ -267,7 +267,12 @@ export default function Home() {
                 video_id: "artisan",
                 video_title: "artisan",
               }}
-              style={{ width: "100%", aspectRatio: "1/1" }}
+              autoPlay="muted"
+              loop
+              muted
+              playsInline
+              style={{ width: "100%", aspectRatio: "1/1", objectFit: "cover" }}
+              className="w-full h-full object-cover pointer-events-none"
             />
           </div>
           <div className="lg:w-1/2 flex flex-col justify-center">
@@ -277,8 +282,8 @@ export default function Home() {
               <span className="italic text-gray-500 dark:text-gray-400">Material.</span>
             </h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed mb-10 max-w-lg">
-              We collaborate with master artisans worldwide. Each piece is an exercise in restraint stripping away the
-              unnecessary to reveal the raw beauty of solid woods, cast metals, and hand woven textiles.
+              We collaborate with master artisans worldwide. Each piece is an exercise in restraint—stripping away the
+              unnecessary to reveal the raw beauty of solid woods, cast metals, and hand-woven textiles.
             </p>
             <div className="grid grid-cols-2 gap-8">
               <div>
