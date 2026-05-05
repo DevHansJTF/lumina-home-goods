@@ -14,27 +14,47 @@ export default function SmoothScroll() {
   const pathname = usePathname();
 
   useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    let lenis: any = null;
+    let rafId: number;
 
-    const lenis = new Lenis({
-      lerp: 0.05,
-      wheelMultiplier: 0.8,
-    });
+    const initLenis = () => {
+      if (mediaQuery.matches && !lenis) {
+        if ("scrollRestoration" in window.history) {
+          window.history.scrollRestoration = "manual";
+        }
 
-    window.__lenis_instance = lenis; // Expose globally to access in other effect if needed, but we can also just use window.scrollTo
+        lenis = new Lenis({
+          lerp: 0.05,
+          wheelMultiplier: 0.8,
+        });
 
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+        window.__lenis_instance = lenis;
 
-    requestAnimationFrame(raf);
+        const raf = (time: number) => {
+          if (lenis) lenis.raf(time);
+          rafId = requestAnimationFrame(raf);
+        };
+
+        rafId = requestAnimationFrame(raf);
+      } else if (!mediaQuery.matches && lenis) {
+        lenis.destroy();
+        lenis = null;
+        delete window.__lenis_instance;
+        cancelAnimationFrame(rafId);
+      }
+    };
+
+    initLenis();
+    mediaQuery.addEventListener("change", initLenis);
 
     return () => {
-      lenis.destroy();
-      delete window.__lenis_instance;
+      if (lenis) {
+        lenis.destroy();
+        delete window.__lenis_instance;
+        if (rafId) cancelAnimationFrame(rafId);
+      }
+      mediaQuery.removeEventListener("change", initLenis);
     };
   }, []);
 

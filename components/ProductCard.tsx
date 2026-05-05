@@ -70,7 +70,7 @@ export default function ProductCard({ product }: { product: Product }) {
             addToCart(product);
           }}
           disabled={!product.inStock}
-          className="absolute bottom-0 left-0 right-0 bg-[#141414] dark:bg-[#EAEAEA] text-white dark:text-[#111111] text-[10px] uppercase tracking-widest py-4 opacity-0 group-hover:opacity-100 transition-opacity z-10 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-center"
+          className="absolute bottom-0 left-0 right-0 bg-[#141414] dark:bg-[#EAEAEA] text-white dark:text-[#111111] text-[10px] uppercase tracking-widest py-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity z-10 disabled:opacity-50 disabled:cursor-not-allowed font-medium text-center"
         >
           {product.inStock ? "+ Add to Cart" : "Out of Stock"}
         </button>
